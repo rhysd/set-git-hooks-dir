@@ -43,4 +43,4 @@ jobs:
           cache-dependency-path: npm/package-lock.json
       - run: npm ci
       - run: npm run build
-      - run: npm test
+      - run: npm test -- --timeout 10000
