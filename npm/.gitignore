@@ -1,4 +1,4 @@
 /node_modules
-/*.js
-/*.js.map
-/*.d.ts
+/index.js
+/index.js.map
+/index.d.ts

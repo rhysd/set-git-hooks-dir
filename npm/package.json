@@ -4,13 +4,24 @@
   "description": "Set (possibly platform-specific) Git hooks directory",
   "main": "index.js",
   "type": "module",
-  "bin": {
-    "set-git-hooks-dir": "main.js"
+  "engines": {
+    "node": ">=18"
   },
+  "bin": {
+    "set-git-hooks-dir": "bin.js"
+  },
+  "types": "index.d.ts",
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "bin.js",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc -p . --pretty -d",
     "watch": "npm run build -- --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
