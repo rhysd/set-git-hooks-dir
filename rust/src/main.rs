@@ -10,5 +10,5 @@ fn main() -> io::Result<()> {
         eprintln!("USAGE: set-git-hooks-dir path/to/dir\n\nSee https://github.com/rhysd/set-git-hooks-dir#readme");
         exit(1);
     };
-    set_git_hooks_dir::install(dir)
+    set_git_hooks_dir::setup(dir)
 }
