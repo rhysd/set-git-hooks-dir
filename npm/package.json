@@ -1,7 +1,7 @@
 {
   "name": "set-git-hooks-dir",
   "version": "0.0.0",
-  "description": "Set Git hooks directory",
+  "description": "Deadly simple Git hooks directory setup tool",
   "main": "index.js",
   "type": "module",
   "engines": {
