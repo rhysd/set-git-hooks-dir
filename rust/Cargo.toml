@@ -1,0 +1,19 @@
+[package]
+name = "set-git-hooks-dir"
+version = "0.0.0"
+edition = "2021"
+description = "Deadly simple Git hooks directory setup tool"
+license = "MIT"
+include = ["src"]
+categories = ["command-line-utilities"]
+keywords = ["git", "hooks", "pre-commit", "pre-push", "husky"]
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+
+[[bin]]
+name = "set-git-hooks-dir"
+path = "src/main.rs"
+
+[dependencies]
