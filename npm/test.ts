@@ -25,7 +25,7 @@ describe('setGitHooksDir', function () {
         }
     });
 
-    it('sets platform-agnostic hooks directory', function () {
+    it('configures hooks directory', function () {
         setGitHooksDir('this-is-test');
         const gitconfig = read(join('.git', 'config'), 'utf-8');
         assert.ok(gitconfig.includes('hooksPath = this-is-test'), gitconfig);

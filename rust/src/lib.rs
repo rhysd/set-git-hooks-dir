@@ -4,7 +4,7 @@ use std::path::Path;
 use std::process::Command;
 
 pub fn setup(dir: impl AsRef<Path>) -> io::Result<()> {
-    let git_var = env::var("GIT_SET_HOOKS_DIR_GIT");
+    let git_var = env::var("SET_GIT_HOOKS_DIR_GIT");
     let git = match &git_var {
         Ok(var) if !var.is_empty() => var.as_str(),
         _ => "git",

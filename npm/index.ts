@@ -4,7 +4,7 @@ import { statSync as stat } from 'node:fs';
 import { normalize } from 'node:path';
 
 export function setGitHooksDir(dirPath: string) {
-    const git = env['GIT_SET_HOOKS_DIR_GIT'] || 'git';
+    const git = env['SET_GIT_HOOKS_DIR_GIT'] || 'git';
     const dir = normalize(dirPath);
     if (!stat(dir).isDirectory()) {
         throw new Error(`The path is not a directory: ${dir}`);
