@@ -7,18 +7,13 @@
   "engines": {
     "node": ">=18"
   },
-  "bin": {
-    "set-git-hooks-dir": "bin.js"
-  },
-  "types": "index.d.ts",
   "files": [
-    "index.d.ts",
     "index.js",
-    "bin.js",
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc -p . --pretty -d",
+    "postinstall": "node index.js",
+    "build": "tsc -p . --pretty",
     "watch": "npm run build -- --watch",
     "test": "mocha test.js",
     "prepublishOnly": "npm run build && npm run test"
