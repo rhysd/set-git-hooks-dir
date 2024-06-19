@@ -1,0 +1,46 @@
+name: CI
+on: [push, pull_request]
+env:
+  TERM: xterm
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+  RUST_BACKTRACE: 1
+defaults:
+  run:
+    working-directory: v2
+
+jobs:
+  rust:
+    defaults:
+      run:
+        working-directory: rust
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy,rustfmt
+      - run: cargo clippy --tests -- -D warnings
+      - run: cargo fmt --all --check
+      - run: cargo test
+  npm:
+    defaults:
+      run:
+        working-directory: npm
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: npm
+          cache-dependency-path: npm/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
