@@ -1,0 +1,35 @@
+{
+  "name": "set-git-hooks-dir",
+  "version": "0.0.0",
+  "description": "Set (possibly platform-specific) Git hooks directory",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "set-git-hooks-dir": "main.js"
+  },
+  "scripts": {
+    "build": "tsc -p . --pretty -d",
+    "watch": "npm run build -- --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhysd/set-git-hooks-dir.git"
+  },
+  "keywords": [
+    "git",
+    "hooks",
+    "pre-commit",
+    "pre-push"
+  ],
+  "author": "rhysd <lin90162@yahoo.co.jp>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhysd/set-git-hooks-dir/issues"
+  },
+  "homepage": "https://github.com/rhysd/set-git-hooks-dir#readme",
+  "devDependencies": {
+    "@types/node": "^20.14.5",
+    "typescript": "^5.4.5"
+  }
+}
