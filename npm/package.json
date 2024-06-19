@@ -1,7 +1,7 @@
 {
   "name": "set-git-hooks-dir",
   "version": "0.0.0",
-  "description": "Set (possibly platform-specific) Git hooks directory",
+  "description": "Set Git hooks directory",
   "main": "index.js",
   "type": "module",
   "engines": {
@@ -20,8 +20,8 @@
   "scripts": {
     "build": "tsc -p . --pretty -d",
     "watch": "npm run build -- --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build"
+    "test": "mocha test.js",
+    "prepublishOnly": "npm run build && npm run test"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,11 @@
   },
   "homepage": "https://github.com/rhysd/set-git-hooks-dir#readme",
   "devDependencies": {
+    "@types/mocha": "^10.0.6",
     "@types/node": "^20.14.5",
+    "@types/tmp": "^0.2.6",
+    "mocha": "^10.4.0",
+    "tmp": "^0.2.3",
     "typescript": "^5.4.5"
   }
 }
