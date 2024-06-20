@@ -1,7 +1,7 @@
 import { env, cwd } from 'node:process';
 import { spawnSync as spawn } from 'node:child_process';
 import { statSync as stat, existsSync as exists } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, normalize } from 'node:path';
 
 function isDir(path: string): boolean {
     try {
@@ -11,25 +11,30 @@ function isDir(path: string): boolean {
     }
 }
 
-export function setGitHooksDir(dirName: string) {
+function verifyHooksDir(dir: string) {
     const workingDir = cwd();
     let cur = workingDir;
     while (true) {
-        const hooksDir = join(cur, dirName);
+        const hooksDir = join(cur, dir);
         if (isDir(hooksDir) && exists(join(cur, '.git'))) {
-            break; // Found
+            return; // Found
         }
         const parent = dirname(cur);
         if (parent === cur) {
-            throw new Error(`Git hooks directory ${dirName} was not found in ${workingDir}`);
+            throw new Error(`Git hooks directory ${dir} was not found at any root of GitHub repository in ${workingDir}`);
         }
         cur = parent;
     }
+}
+
+export function setGitHooksDir(dir: string) {
+    dir = normalize(dir);
+    verifyHooksDir(dir);
 
     const git = env['SET_GIT_HOOKS_DIR_GIT'] || 'git';
-    const { status, stderr } = spawn(git, ['config', 'core.hooksPath', dirName], { env: {} });
+    const { status, stderr } = spawn(git, ['config', 'core.hooksPath', dir], { env: {} });
     if (status === null || status > 0) {
-        throw new Error(`\`${git} config core.hooksPath ${dirName}\` failed with status ${status}: ${stderr.toString()}`);
+        throw new Error(`\`${git} config core.hooksPath ${dir}\` failed with status ${status}: ${stderr.toString()}`);
     }
 }
 
