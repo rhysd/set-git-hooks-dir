@@ -12,7 +12,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "postinstall": "node index.js",
+    "postinstall": "node index.js || true",
     "build": "tsc -p . --pretty",
     "watch": "npm run build -- --watch",
     "test": "mocha test.js",

@@ -38,9 +38,4 @@ export function setGitHooksDir(dir: string) {
     }
 }
 
-try {
-    setGitHooksDir('.git-hooks');
-    console.log('Set .git-hooks directory to core.hooksPath');
-} catch(err) {
-    console.error(err); // Do not make this script fail
-}
+setGitHooksDir('.git-hooks');
