@@ -22,6 +22,9 @@ impl Default for Fixture {
             let stderr = String::from_utf8_lossy(&out.stderr);
             panic!("`git init` failed: {stderr}");
         }
+        for name in ["GITHUB_ACTION", "CI"] {
+            env::remove_var(name);
+        }
         Self { cwd, _tmp: tmp }
     }
 }
@@ -39,6 +42,15 @@ fn test_setup_git_config() {
     set_git_hooks_dir::setup("this-directory-does-not-exist").unwrap_err();
 
     fs::create_dir("this-is-test").unwrap();
+
+    // Hooks are not set on CI
+    env::set_var("GITHUB_ACTION", "true");
+    set_git_hooks_dir::setup("this-is-test").unwrap();
+    let content = fs::read_to_string(".git/config").unwrap();
+    assert!(!content.contains("hooksPath = this-is-test"), "{content:?}");
+    env::remove_var("GITHUB_ACTION");
+
+    // Normal case
     set_git_hooks_dir::setup("this-is-test").unwrap();
     let content = fs::read_to_string(".git/config").unwrap();
     assert!(content.contains("hooksPath = this-is-test"), "{content:?}");

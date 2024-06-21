@@ -29,6 +29,12 @@ function findDotGitPath(dir: string): string {
 }
 
 export function setGitHooksDir(dir: string) {
+    for (const name of ["SET_GIT_HOOKS_DIR_SKIP", "GITHUB_ACTION", "CI"]) {
+        if (env[name]) {
+            return;
+        }
+    }
+
     dir = normalize(dir);
     const dotGit = findDotGitPath(dir);
     if (isDir(dotGit)) {

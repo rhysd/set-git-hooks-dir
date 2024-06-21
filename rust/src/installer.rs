@@ -26,6 +26,12 @@ fn find_dot_git(dir: &Path) -> io::Result<PathBuf> {
 
 /// Setup the Git hooks directory path specified by `dir` argument.
 pub fn setup(dir: impl AsRef<Path>) -> io::Result<()> {
+    for var in ["SET_GIT_HOOKS_DIR_SKIP", "GITHUB_ACTION", "CI"] {
+        if matches!(env::var(var), Ok(v) if !v.is_empty()) {
+            return Ok(());
+        }
+    }
+
     let dir = dir.as_ref();
 
     let dot_git = find_dot_git(dir)?;

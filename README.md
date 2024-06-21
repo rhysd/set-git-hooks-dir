@@ -14,7 +14,7 @@ Otherwise running the command is easily forgotten when checking out your reposit
 [husky][].
 
 This tool offers the way to automatically setup the Git hooks while preparing for the development in your repository.
-And it does nothing else.
+And it does nothing else. Note that this automatic setup is skipped when it is run on CI.
 
 This tool now supports the following language/tool, and maybe more languages/tools are supported in the future.
 
@@ -92,6 +92,14 @@ environment variable.
 
 ```sh
 export SET_GIT_HOOKS_DIR_GIT=/path/to/git
+```
+
+### Skip automatically configure Git hooks directory
+
+Setting `SET_GIT_HOOKS_DIR_SKIP` environment variable skips automatic Git hooks directory configuration.
+
+```sh
+export SET_GIT_HOOKS_DIR_SKIP=true
 ```
 
 ## License
