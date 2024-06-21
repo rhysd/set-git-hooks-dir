@@ -11,7 +11,7 @@ git config core.hooksPath .git-hooks
 
 So why don't you run this simple command directly in your terminal? That's because you need to automate this setup.
 Otherwise running the command is easily forgotten when checking out your repository. This is the same motivation as
-[husky][].
+[husky][] or [pre-commit][].
 
 This tool offers the way to automatically setup the Git hooks while preparing for the development in your repository.
 And it does nothing else. Note that this automatic setup is skipped when it is run on CI.
@@ -26,9 +26,10 @@ This tool now supports the following language/tool, and maybe more languages/too
 
 - Git 2.9 or later for `core.hooksPath` configuration
 
-## Create your Git hooks directory
+## Create `.git-hooks` directory
 
-Create .git-hooks directory at the root of your repository and put your favorite Git hooks.
+Create `.git-hooks` directory at the root of your repository and put your favorite Git hooks. Ensure that the scripts
+are executable.
 
 ```sh
 cd path/to/your/repository
@@ -41,6 +42,9 @@ echo 'cargo test' > .git-hooks/pre-push
 
 # For npm users
 echo 'npm test' > .git-hooks/pre-push
+
+# On *nix OS, ensure the hook is executable
+chmod +x .git-hooks/pre-push
 
 # Manage hooks by Git
 git add .git-hooks
@@ -113,5 +117,6 @@ This repository is distributed under [the MIT license](LICENSE).
 [cargo]: https://doc.rust-lang.org/cargo/
 [npm]: https://www.npmjs.com/
 [husky]: https://typicode.github.io/husky/
+[pre-commit]: https://pre-commit.com/
 [build-script]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
 [cfg]: https://doc.rust-lang.org/reference/conditional-compilation.html
