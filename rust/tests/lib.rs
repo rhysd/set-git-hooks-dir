@@ -35,8 +35,17 @@ impl Drop for Fixture {
 #[test]
 fn test_setup_git_config() {
     let _fixture = Fixture::default();
+
+    set_git_hooks_dir::setup("this-directory-does-not-exist").unwrap_err();
+
     fs::create_dir("this-is-test").unwrap();
     set_git_hooks_dir::setup("this-is-test").unwrap();
+    let content = fs::read_to_string(".git/config").unwrap();
+    assert!(content.contains("hooksPath = this-is-test"), "{content:?}");
+
+    // Do not override existing configuration
+    fs::create_dir("second-this-is-test").unwrap();
+    set_git_hooks_dir::setup("second-this-is-test").unwrap();
     let content = fs::read_to_string(".git/config").unwrap();
     assert!(content.contains("hooksPath = this-is-test"), "{content:?}");
 }

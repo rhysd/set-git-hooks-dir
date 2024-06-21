@@ -1,15 +1,19 @@
 use std::env;
-use std::io;
-use std::path::Path;
+use std::fs::File;
+use std::io::{self, BufRead, BufReader};
+use std::path::{Path, PathBuf};
 use std::process::Command;
 
-fn verify_hooks_dir(dir: &Path) -> io::Result<()> {
+fn find_dot_git(dir: &Path) -> io::Result<PathBuf> {
     let cwd = env::current_dir()?;
     let mut cur = cwd.as_path();
     loop {
         let hooks_dir = cur.join(dir);
-        if hooks_dir.is_dir() && cur.join(".git").exists() {
-            return Ok(());
+        if hooks_dir.is_dir() {
+            let dot_git = cur.join(".git");
+            if dot_git.exists() {
+                return Ok(dot_git);
+            }
         }
         let Some(parent) = cur.parent() else {
             let msg =
@@ -22,7 +26,16 @@ fn verify_hooks_dir(dir: &Path) -> io::Result<()> {
 
 pub fn setup(dir: impl AsRef<Path>) -> io::Result<()> {
     let dir = dir.as_ref();
-    verify_hooks_dir(dir)?;
+
+    let dot_git = find_dot_git(dir)?;
+    if dot_git.is_dir() {
+        let config = File::open(dot_git.join("config"))?;
+        for line in BufReader::new(config).lines() {
+            if line?.starts_with("\thooksPath = ") {
+                return Ok(());
+            }
+        }
+    }
 
     let git_var = env::var("SET_GIT_HOOKS_DIR_GIT");
     let git = match &git_var {
