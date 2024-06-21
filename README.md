@@ -1,9 +1,11 @@
 Set Git hooks directory
 =======================
 [![CI][ci-badge]][ci]
+[![crate][crate-badge]][crate]
+[![npm][npm-badge]][npm]
 
-This is a deadly simple tool to manage your [Git hooks][hooks] in your repository and automate the setup for Rust and
-Node.js projects. This tool essentially runs the following command in your repository.
+[set-git-hooks-dir][repo] is a deadly simple tool to manage your [Git hooks][hooks] in your repository and automate the
+setup for Rust and Node.js projects. This tool essentially runs the following command in your repository.
 
 ```sh
 git config core.hooksPath .git-hooks
@@ -63,7 +65,7 @@ ls .git/hooks/
 
 #### Rust
 
-Add set-git-hooks-dir crate as your dev dependencies and run `cargo check` to do the initial setup.
+Add [set-git-hooks-dir crate][crate] to your dev dependencies and run `cargo check` to do the initial setup.
 
 ```sh
 cargo add set-git-hooks-dir --dev
@@ -75,7 +77,7 @@ And everything you need to do has been done. When your project's dev-dependencie
 
 #### npm
 
-Add set-git-hooks-dir npm package as your project's dev dependency.
+Add [set-git-hooks-dir npm package][npm] as your project's dev dependency.
 
 ```sh
 npm install set-git-hooks-dir --save-dev
@@ -116,6 +118,11 @@ This repository is distributed under [the MIT license](LICENSE).
 
 [ci-badge]: https://github.com/rhysd/set-git-hooks-dir/actions/workflows/ci.yaml/badge.svg
 [ci]: https://github.com/rhysd/set-git-hooks-dir/actions/workflows/ci.yaml
+[crate-badge]: https://img.shields.io/crates/v/set-git-hooks-dir
+[crate]: https://crates.io/crates/set-git-hooks-dir
+[npm-badge]: https://img.shields.io/npm/v/set-git-hooks-dir
+[npm]: https://www.npmjs.com/package/set-git-hooks-dir
+[repo]: https://github.com/rhysd/set-git-hooks-dir
 [hooks]: https://git-scm.com/docs/githooks
 [cargo]: https://doc.rust-lang.org/cargo/
 [npm]: https://www.npmjs.com/

@@ -1,3 +1,8 @@
+`set-git-hooks-dir` crate
+=========================
+[crate-badge]: https://img.shields.io/crates/v/set-git-hooks-dir
+[crate]: https://crates.io/crates/set-git-hooks-dir
+
 ## Usage
 
 See https://github.com/rhysd/set-git-hooks-dir#readme for the usage.
