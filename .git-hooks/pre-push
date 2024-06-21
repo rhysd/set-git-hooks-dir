@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e -o pipefail
+set +x
+
+(cd rust && cargo test && cargo fmt -- --check)
+(cd npm && npm run build && npm test)
