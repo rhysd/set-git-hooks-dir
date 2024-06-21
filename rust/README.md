@@ -4,14 +4,14 @@ See https://github.com/rhysd/set-git-hooks-dir#readme for the usage.
 
 ## Advanced usage
 
-If you want to configure the Git hooks by yourself, it is still possible by disabling automatic setup by
-disabling the feature,
+If you want to configure the Git hooks by yourself, it is still possible to disable the automatic setup by disabling
+the feature and by writing your own [build script][build-script].
 
 ```sh
-cargo add set-git-hooks-dir --dev --no-default-features
+cargo add set-git-hooks-dir --build --no-default-features
 ```
 
-and writing your own [build script][build-script].
+Use `set_git_hooks_dir::setup` function in your `build.rs`.
 
 ```rust
 fn main() {

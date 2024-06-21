@@ -22,14 +22,16 @@ This tool now supports the following language/tool, and maybe more languages/too
 - Node.js ([npm][])
 - ...more?
 
-## Prerequisites
+## Usage
+
+### Prerequisites
 
 - Git 2.9 or later for `core.hooksPath` configuration
 
-## Create `.git-hooks` directory
+### Create `.git-hooks` directory
 
-Create `.git-hooks` directory at the root of your repository and put your favorite Git hooks. Ensure that the scripts
-are executable.
+Create `.git-hooks` directory at the root of your repository and put your favorite Git hooks. Ensure that the hook
+scripts are executable.
 
 ```sh
 cd path/to/your/repository
@@ -57,9 +59,9 @@ directory.
 ls .git/hooks/
 ```
 
-## Setup the hooks directory
+### Setup the hooks directory
 
-### Rust
+#### Rust
 
 Add set-git-hooks-dir crate as your dev dependencies and run `cargo check` to do the initial setup.
 
@@ -68,10 +70,10 @@ cargo add set-git-hooks-dir --dev
 cargo check
 ```
 
-And everything you need to do has been done. When your project's dev-dependencies (e.g. `cargo test`, `cargo check`,
-`cargo clippy`) are built at first, `core.hooksPath` is configured.
+And everything you need to do has been done. When your project's dev-dependencies are built (e.g. `cargo test`,
+`cargo check`, `cargo clippy`) for the first time, `core.hooksPath` is automatically configured.
 
-### npm
+#### npm
 
 Add set-git-hooks-dir npm package as your project's dev dependency.
 
@@ -89,7 +91,7 @@ And everything you need to do has been done. The `postinstall` hook of the packa
 
 Some environment variables can customize the behavior of this tool.
 
-### Git command
+### `SET_GIT_HOOKS_DIR_GIT`
 
 This tool uses `git` command by default. However the command can be customized with the `SET_GIT_HOOKS_DIR_GIT`
 environment variable.
@@ -98,9 +100,10 @@ environment variable.
 export SET_GIT_HOOKS_DIR_GIT=/path/to/git
 ```
 
-### Skip automatically configure Git hooks directory
+### `SET_GIT_HOOKS_DIR_SKIP`
 
-Setting `SET_GIT_HOOKS_DIR_SKIP` environment variable skips automatic Git hooks directory configuration.
+Setting `SET_GIT_HOOKS_DIR_SKIP` environment variable skips the automatic configuration. It is useful when you want to
+prevent the configuration temporarily (e.g. self-hosted CI system).
 
 ```sh
 export SET_GIT_HOOKS_DIR_SKIP=true
@@ -118,5 +121,3 @@ This repository is distributed under [the MIT license](LICENSE).
 [npm]: https://www.npmjs.com/
 [husky]: https://typicode.github.io/husky/
 [pre-commit]: https://pre-commit.com/
-[build-script]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
-[cfg]: https://doc.rust-lang.org/reference/conditional-compilation.html
