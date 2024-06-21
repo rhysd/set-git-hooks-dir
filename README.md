@@ -2,18 +2,18 @@ Set Git hooks directory
 =======================
 [![CI][ci-badge]][ci]
 
-This is a deadly simple Git hooks directory setup tool available as a tiny Rust crate or npm package.
-This tool essentially runs the following command in your repository.
+This is a deadly simple tool to manage your [Git hooks][hooks] in your repository and automate the setup for Rust and
+Node.js projects. This tool essentially runs the following command in your repository.
 
 ```sh
-git config core.hooksPath path/to/dir
+git config core.hooksPath .git-hooks
 ```
 
 So why don't you run this simple command directly in your terminal? That's because you need to automate this setup.
 Otherwise running the command is easily forgotten when checking out your repository. This is the same motivation as
 [husky][].
 
-This tool offers the way to automatically setup the Git hooks while preparing the development in your repository.
+This tool offers the way to automatically setup the Git hooks while preparing for the development in your repository.
 And it does nothing else.
 
 This tool now supports the following language/tool, and maybe more languages/tools are supported in the future.
@@ -28,9 +28,11 @@ This tool now supports the following language/tool, and maybe more languages/too
 
 ## Create your Git hooks directory
 
-Create your favorite directory for putting Git hooks in your repository.
+Create .git-hooks directory at the root of your repository and put your favorite Git hooks.
 
 ```sh
+cd path/to/your/repository
+
 # The directory for your Git hooks
 mkdir .git-hooks
 
@@ -39,9 +41,13 @@ echo 'cargo test' > .git-hooks/pre-push
 
 # For npm users
 echo 'npm test' > .git-hooks/pre-push
+
+# Manage hooks by Git
+git add .git-hooks
 ```
 
-In this example, `pre-push` hook is created. To know all hooks, see `.git/hooks/` directory.
+In this example, `pre-push` hook is created for running tests before `git push`. To know all hooks, see `.git/hooks/`
+directory.
 
 ```sh
 ls .git/hooks/
@@ -51,108 +57,35 @@ ls .git/hooks/
 
 ### Rust
 
-Add set-git-hooks-dir crate as your dev dependencies.
+Add set-git-hooks-dir crate as your dev dependencies and run `cargo check` to do the initial setup.
 
 ```sh
 cargo add set-git-hooks-dir --dev
+cargo check
 ```
 
-Then write the following code in your [`build.rs` build script][cargo-build-script]. The `debug_assertions` gate avoids
-configuring Git hooks when it is built in release mode (e.g. on `cargo install`).
-
-```rust
-fn main() {
-    // This block runs only when debug build is enabled.
-    #[cfg(debug_assertions)]
-    {
-        set_git_hooks_dir::install(".git-hooks").unwrap();
-    }
-}
-```
-
-Finally run `cargo check`, `cargo test`, or `cargo clippy`. It configures `core.hooksPath` in `.git/config`.
+And everything you need to do has been done. When your project's dev-dependencies (e.g. `cargo test`, `cargo check`,
+`cargo clippy`) are built at first, `core.hooksPath` is configured.
 
 ### npm
 
-Add set-git-hooks-dir npm package as your dev dependencies.
+Add set-git-hooks-dir npm package as your project's dev dependency.
 
 ```sh
 npm install set-git-hooks-dir --save-dev
 
-# When you use yarn
+# For yarn users
 yarn add set-git-hooks-dir --dev
 ```
 
-Then add the `prepare` npm hook in your package.json.
+And everything you need to do has been done. The `postinstall` hook of the package automatically configures
+`.git-hooks` directory in `.git/config`.
 
-```json
-{
-    ...
-    "scripts": {
-        "prepare": "set-git-hooks-dir .git-hooks"
-    }
-}
-```
+## Customization
 
-Finally run `npm install`. It configures `core.hooksPath` in `.git/config`.
+Some environment variables can customize the behavior of this tool.
 
-## OS-specific hooks
-
-You may need OS-specific Git hooks.
-
-For example, Windows sometimes needs Powershell so the same hooks are not available as Linux. Such complicated setup
-is possible with this tool.
-
-Prepare OS-specific hooks in different directory. Let's say Windows-specific hooks are in `.git-hooks/windows/` and
-hooks for other OSes are in `.git-hooks/others/`.
-
-### Rust
-
-[`cfg` gate][cfg] is useful for the conditional setup.
-
-```rust
-fn main() {
-    // Setup for Windows
-    #[cfg(all(debug_assertions, windows))]
-    {
-        set_git_hooks_dir::install(r#".git-hooks\windows"#).unwrap();
-    }
-    // Setup for others
-    #[cfg(all(debug_assertions, not(windows)))]
-    {
-        set_git_hooks_dir::install(".git-hooks/others").unwrap();
-    }
-}
-```
-
-### npm
-
-Create a small script which does the conditional setup in JavaScript.
-
-Let's say we have `scripts/setup-git-hooks.mjs`:
-
-```javascript
-import { setGitHooksDir } from 'set-git-hooks-dir';
-
-if (process.platform === 'win32') {
-    setGitHooksDir('.git-hooks\\windows');
-} else {
-    setGitHooksDir('.git-hooks/others');
-}
-```
-
-Instead of running `set-git-hooks-dir` command, run the script in `prepare` hook:
-
-```json
-{
-    ...
-    "scripts": {
-        "prepare": "node scripts/setup-git-hooks.mjs"
-    }
-}
-```
-
-## Custom Git command
+### Git command
 
 This tool uses `git` command by default. However the command can be customized with the `SET_GIT_HOOKS_DIR_GIT`
 environment variable.
@@ -168,8 +101,9 @@ This repository is distributed under [the MIT license](LICENSE).
 
 [ci-badge]: https://github.com/rhysd/set-git-hooks-dir/actions/workflows/ci.yaml/badge.svg
 [ci]: https://github.com/rhysd/set-git-hooks-dir/actions/workflows/ci.yaml
+[hooks]: https://git-scm.com/docs/githooks
 [cargo]: https://doc.rust-lang.org/cargo/
 [npm]: https://www.npmjs.com/
 [husky]: https://typicode.github.io/husky/
-[cargo-build-script]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
+[build-script]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
 [cfg]: https://doc.rust-lang.org/reference/conditional-compilation.html

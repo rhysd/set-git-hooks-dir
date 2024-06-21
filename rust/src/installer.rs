@@ -24,6 +24,7 @@ fn find_dot_git(dir: &Path) -> io::Result<PathBuf> {
     }
 }
 
+/// Setup the Git hooks directory path specified by `dir` argument.
 pub fn setup(dir: impl AsRef<Path>) -> io::Result<()> {
     let dir = dir.as_ref();
 
