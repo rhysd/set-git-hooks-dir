@@ -16,7 +16,9 @@
     "build": "tsc -p . --pretty",
     "watch": "npm run build -- --watch",
     "test": "mocha test.js",
-    "prepublishOnly": "npm run build && npm run test"
+    "fmt": "prettier --write *.ts",
+    "lint": "prettier --check *.ts",
+    "prepublishOnly": "npm run lint && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,7 @@
     "@types/node": "^20.14.5",
     "@types/tmp": "^0.2.6",
     "mocha": "^10.4.0",
+    "prettier": "^3.3.2",
     "tmp": "^0.2.3",
     "typescript": "^5.4.5"
   }

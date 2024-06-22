@@ -60,4 +60,3 @@ describe('setGitHooksDir', function () {
         }
     });
 });
-

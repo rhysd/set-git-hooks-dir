@@ -6,7 +6,7 @@ import { dirname, join, normalize } from 'node:path';
 function isDir(path: string): boolean {
     try {
         return stat(path).isDirectory();
-    } catch(err) {
+    } catch (err) {
         return false;
     }
 }
@@ -22,14 +22,16 @@ function findDotGitPath(dir: string): string {
         }
         const parent = dirname(cur);
         if (parent === cur) {
-            throw new Error(`Git hooks directory ${dir} was not found at any root of GitHub repository in ${workingDir}`);
+            throw new Error(
+                `Git hooks directory ${dir} was not found at any root of GitHub repository in ${workingDir}`,
+            );
         }
         cur = parent;
     }
 }
 
 export function setGitHooksDir(dir: string) {
-    for (const name of ["SET_GIT_HOOKS_DIR_SKIP", "GITHUB_ACTION", "CI"]) {
+    for (const name of ['SET_GIT_HOOKS_DIR_SKIP', 'GITHUB_ACTION', 'CI']) {
         if (env[name]) {
             return;
         }
