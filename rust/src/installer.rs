@@ -50,11 +50,13 @@ pub fn setup(dir: impl AsRef<Path>) -> io::Result<()> {
         _ => "git",
     };
 
-    let output = Command::new(git)
-        .arg("config")
-        .arg("core.hooksPath")
-        .arg(dir)
-        .output()?;
+    let mut cmd = Command::new(git);
+    cmd.arg("config").arg("core.hooksPath").arg(dir);
+    if let Some(root) = dot_git.parent() {
+        cmd.current_dir(root);
+    }
+
+    let output = cmd.output()?;
     if !output.status.success() {
         let stderr = String::from_utf8_lossy(&output.stderr);
         return Err(io::Error::new(
