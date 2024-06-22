@@ -5,15 +5,18 @@ Set Git hooks directory
 [![npm][npm-badge]][npm]
 
 [set-git-hooks-dir][repo] is a deadly simple tool to manage your [Git hooks][hooks] in your repository and automate the
-setup for Rust and Node.js projects. This tool essentially runs the following command in your repository.
+setup for Rust and Node.js projects. This tool essentially runs the following command in your repository. This is the
+same motivation as [husky][] or [pre-commit][] but set-git-hooks-dir is much simpler than them.
 
 ```sh
 git config core.hooksPath .git-hooks
 ```
 
-So why don't you run this simple command directly in your terminal? That's because you need to automate this setup.
-Otherwise running the command is easily forgotten when checking out your repository. This is the same motivation as
-[husky][] or [pre-commit][].
+So why don't you run this simple command directly in your terminal? That's because
+
+- you need to automate this setup. Otherwise running the command is easily forgotten when checking out your repository.
+- set-git-hooks-dir configures hooks wisely. It configures Git hooks only once to avoid running `git` process on each
+  build. And it skips the configuration on CI.
 
 This tool offers the way to automatically setup the Git hooks while preparing for the development in your repository.
 And it does nothing else. Note that this automatic setup is skipped when it is run on CI.
@@ -61,7 +64,7 @@ directory.
 ls .git/hooks/
 ```
 
-### Setup the hooks directory
+### Add the package for automating configuration
 
 #### Rust
 
@@ -75,7 +78,7 @@ cargo check
 And everything you need to do has been done. When your project's dev-dependencies are built (e.g. `cargo test`,
 `cargo check`, `cargo clippy`) for the first time, `core.hooksPath` is automatically configured.
 
-#### npm
+#### Node.js
 
 Add [set-git-hooks-dir npm package][npm] as your project's dev dependency.
 
