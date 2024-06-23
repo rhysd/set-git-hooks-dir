@@ -3,6 +3,8 @@ import { spawnSync as spawn } from 'node:child_process';
 import { statSync as stat, existsSync as exists, readFileSync as read } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
 
+const CI_ENV_VARS = ['SET_GIT_HOOKS_DIR_SKIP', 'GITHUB_ACTION', 'CI', 'JENKINS_URL'];
+
 function isDir(path: string): boolean {
     try {
         return stat(path).isDirectory();
@@ -31,7 +33,7 @@ function findDotGitPath(dir: string): string {
 }
 
 export function setGitHooksDir(dir: string) {
-    for (const name of ['SET_GIT_HOOKS_DIR_SKIP', 'GITHUB_ACTION', 'CI']) {
+    for (const name of CI_ENV_VARS) {
         if (env[name]) {
             return;
         }

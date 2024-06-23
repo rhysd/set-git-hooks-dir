@@ -4,6 +4,13 @@ use std::io::{self, BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
+const CI_ENV_VARS: &[&str] = &[
+    "SET_GIT_HOOKS_DIR_SKIP",
+    "GITHUB_ACTION",
+    "CI",
+    "JENKINS_URL",
+];
+
 fn find_dot_git(dir: &Path) -> io::Result<PathBuf> {
     let cwd = env::current_dir()?;
     let mut cur = cwd.as_path();
@@ -26,7 +33,7 @@ fn find_dot_git(dir: &Path) -> io::Result<PathBuf> {
 
 /// Setup the Git hooks directory path specified by `dir` argument.
 pub fn setup(dir: impl AsRef<Path>) -> io::Result<()> {
-    for var in ["SET_GIT_HOOKS_DIR_SKIP", "GITHUB_ACTION", "CI"] {
+    for var in CI_ENV_VARS {
         if matches!(env::var(var), Ok(v) if !v.is_empty()) {
             return Ok(());
         }
