@@ -2,12 +2,13 @@ import subprocess
 import unittest
 import os.path as path
 import os
+import sys
 from glob import glob
 from shutil import which
 from tempfile import TemporaryDirectory
 from set_git_hooks_dir import setup
 
-global_python = 'python3' if which('python3') else 'python'
+global_python = 'python' if which('python') else 'python3'
 
 class TestSetGitHooksDir(unittest.TestCase):
     def setUp(self):
@@ -38,6 +39,8 @@ class TestSetGitHooksDir(unittest.TestCase):
         self._run([global_python, '-m', 'venv', 'venv'])
 
         local_python = path.join(self.dir, 'venv', 'bin', 'python')
+        if sys.platform == 'win32':
+            local_python = path.join(self.dir, 'venv', 'Scripts', 'python.exe')
         self._run([local_python, '-m', 'pip', 'install', 'build', '--no-cache-dir', '--no-input', '--verbose'])
         self._run([local_python, '-m', 'build', self.package_dir, '--outdir', '.', '--sdist'])
         self._run([local_python, '-m', 'pip', 'install', self._find_sdist(), '--no-input', '--verbose'])
