@@ -29,7 +29,7 @@ class TestSetGitHooksDir(unittest.TestCase):
         found = []
         for pat in ['set_git_hooks_dir-*.tar.gz', 'set_git_hooks_dir-*.zip']:
             found.extend(glob(pat, root_dir=self.dir))
-        assert found
+        assert len(found) == 1
         return found[0]
 
     def test_configure_git_hooks(self):
