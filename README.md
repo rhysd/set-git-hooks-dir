@@ -3,10 +3,11 @@ Set Git hooks directory
 [![CI][ci-badge]][ci]
 [![crate][crate-badge]][crate]
 [![npm][npm-badge]][npm]
+[![pypi][pypi-badge]][pypi]
 
 [set-git-hooks-dir][repo] is a deadly simple tool to manage your [Git hooks][hooks] in your repository and automate the
-setup for Rust and Node.js projects. This tool essentially runs the following command in your repository. This is the
-same motivation as [husky][] or [pre-commit][] but set-git-hooks-dir is much simpler than them.
+setup for Rust, Node.js, and Python projects. This tool essentially runs the following command in your repository. This
+is the same motivation as [husky][] or [pre-commit][] but set-git-hooks-dir is much simpler than them.
 
 ```sh
 git config core.hooksPath .git-hooks
@@ -23,8 +24,9 @@ And it does nothing else. Note that this automatic setup is skipped when it is r
 
 This tool now supports the following language/tool, and maybe more languages/tools are supported in the future.
 
-- Rust ([cargo][])
-- Node.js ([npm][])
+- [Rust](./rust) ([cargo][])
+- [Node.js](./npm) ([npmjs][])
+- [Python](./python) ([pip][])
 - ...more?
 
 ## Usage
@@ -92,6 +94,18 @@ yarn add set-git-hooks-dir --dev
 And everything you need to do has been done. The `postinstall` hook of the package automatically configures
 `.git-hooks` directory in `.git/config`.
 
+#### Python
+
+Ensure that you have created and activated your Python virtual environment within your repository. Otherwise the
+automatic configuration won't work due to limitation of the Python package manager.
+
+```sh
+python -m pip install set-git-hooks-dir
+```
+
+This command downloads a source package (sdist) and builds it in your local. `git-hooks` directory is configured in
+`.git/config` while building the package.
+
 ## Customization
 
 Some environment variables can customize the behavior of this tool.
@@ -125,9 +139,12 @@ This repository is distributed under [the MIT license](LICENSE).
 [crate]: https://crates.io/crates/set-git-hooks-dir
 [npm-badge]: https://img.shields.io/npm/v/set-git-hooks-dir
 [npm]: https://www.npmjs.com/package/set-git-hooks-dir
+[pypi-badge]: https://img.shields.io/pypi/v/set-git-hooks-dir
+[pypi]: https://pypi.org/project/set-git-hooks-dir/
 [repo]: https://github.com/rhysd/set-git-hooks-dir
 [hooks]: https://git-scm.com/docs/githooks
 [cargo]: https://doc.rust-lang.org/cargo/
-[npm]: https://www.npmjs.com/
+[npmjs]: https://www.npmjs.com/
+[pip]: https://pip.pypa.io/en/stable/
 [husky]: https://typicode.github.io/husky/
 [pre-commit]: https://pre-commit.com/
