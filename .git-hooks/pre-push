@@ -5,3 +5,4 @@ set +x
 
 (cd rust && cargo test && cargo clippy -- -D warnings && cargo fmt -- --check)
 (cd npm && npm run lint && npm run build && npm test)
+(cd python && source venv/bin/activate && python test/test_setup.py)
