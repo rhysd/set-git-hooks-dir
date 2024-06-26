@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "set-git-hooks-dir"
+version = "0.0.5"
+description = "Deadly simple Git hooks directory setup tool"
+authors = [
+  { name="rhysd", email="lin90162@yahoo.co.jp" },
+]
+requires-python = ">=3.10"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/rhysd/set-git-hooks-dir"
+Issues = "https://github.com/rhysd/set-git-hooks-dir/issues"
