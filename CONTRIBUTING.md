@@ -71,8 +71,20 @@ source ./venv/bin/activate
 The virtual env contains all tools for developing Python package.
 
 ```sh
+# Install all dependencies and install itself as develop mode
+python -m pip install '.[dev]'
+
 # Run tests
 python ./test/test_setup.py
+
+# Type checking with mypy
+mypy
+
+# Lint with flake8
+flake8 ./set_git_hooks_dir ./test
+
+# Format with black
+black ./set_git_hooks_dir ./test
 ```
 
 The [`publish.bash`](./scripts/publish.bash) script builds the Python package and uploads it to [PyPI](https://pypi.org/).
@@ -83,3 +95,20 @@ bash ./scripts/publish.bash
 
 **Note:** Only a sdist package should be uploaded. Do not upload wheel package (`.whl`). The wheel package does not
 allow running an arbitrary code on installing the package. We rely on the hook to configure Git hooks.
+
+## CI
+
+All CI jobs are defined in the [CI workflow](.github/workflows/ci). All the following combinations should be tested:
+
+- Languages
+  - Rust
+  - Node.js
+  - Python
+- OS
+  - Linux
+  - macOS
+  - Windows
+- Checks
+  - Unit/Integration tests
+  - Lints
+  - Code formatting

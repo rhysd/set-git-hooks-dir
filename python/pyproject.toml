@@ -9,14 +9,37 @@ description = "Deadly simple Git hooks directory setup tool"
 authors = [
   { name="rhysd", email="lin90162@yahoo.co.jp" },
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "setuptools",
+]
 
 [project.urls]
 Homepage = "https://github.com/rhysd/set-git-hooks-dir"
+Repository = "https://github.com/rhysd/set-git-hooks-dir.git"
+Changelog = "https://github.com/rhysd/set-git-hooks-dir/blob/main/CHANGELOG.md"
 Issues = "https://github.com/rhysd/set-git-hooks-dir/issues"
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "twine",
+    "flake8",
+    "black",
+    "mypy",
+    "types-setuptools",
+]
+
+[tool.black]
+line-length = 120
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+files = ["./set_git_hooks_dir", "./test"]

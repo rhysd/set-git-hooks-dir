@@ -13,8 +13,5 @@ set -x
 
 rm -rf ./dist
 
-python -m pip install build
 python -m build --sdist
-
-python -m pip install twine
-python -m twine upload dist/
+python -m twine upload dist/*

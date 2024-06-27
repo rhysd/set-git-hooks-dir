@@ -55,6 +55,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3'
-      - run: pip install setuptools
-      - run: pip install -e .
+      - run: pip install -e '.[dev]'
       - run: python test/test_setup.py
+      - run: flake8 ./set_git_hooks_dir ./test
+      - run: black --check ./set_git_hooks_dir ./test
+      - run: mypy
