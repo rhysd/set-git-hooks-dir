@@ -60,3 +60,17 @@ jobs:
       - run: flake8 ./set_git_hooks_dir ./test
       - run: black --check ./set_git_hooks_dir ./test
       - run: mypy
+  ruby:
+    defaults:
+      run:
+        working-directory: ruby
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3'
+      - run: ruby test/test_set_hooks.rb
