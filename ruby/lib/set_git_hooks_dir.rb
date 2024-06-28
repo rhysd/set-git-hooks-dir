@@ -8,7 +8,7 @@ class SetGitHooksDir
       return if SKIP_ENV_VARS.lazy.filter_map{|n| ENV[n]}.any?{|v| !v.empty? }
 
       hooks_dir = Pathname.new hooks_dir
-      cwd = Pathname.getwd
+      cwd = Pathname.pwd
       dotgit = cwd.ascend
         .filter_map{|dir| dir + '.git' if (dir + hooks_dir).directory? }
         .find{|dotgit| dotgit.exist? }
