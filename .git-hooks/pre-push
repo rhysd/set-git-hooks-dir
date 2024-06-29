@@ -3,7 +3,19 @@
 set -e -o pipefail
 set +x
 
-(cd rust && cargo test && cargo clippy -- -D warnings && cargo fmt -- --check)
-(cd npm && npm run lint && npm run build && npm test)
-(cd python && source venv/bin/activate && python test/test_setup.py)
-(cd ruby && ruby test/test_set_hooks.rb)
+if [ -d rust/target ]; then
+    echo 'Running tests for Rust'
+    (cd rust && cargo test && cargo clippy -- -D warnings && cargo fmt -- --check)
+fi
+if [ -d npm/node_modules ]; then
+    echo 'Running tests for npm package'
+    (cd npm && npm run lint && npm run build && npm test)
+fi
+if [ -d python/venv ]; then
+    echo 'Running tests for pip package'
+    (cd python && source venv/bin/activate && python test/test_setup.py)
+fi
+if [ -d ruby/.bundle/deps ]; then
+    echo 'Running tests for Ruby package'
+    (cd ruby && rake test && rake check)
+fi
