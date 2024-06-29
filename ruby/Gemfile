@@ -1,3 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'set_git_hooks_dir', path: '.'
+
+group :development do
+  gem 'rufo'
+end

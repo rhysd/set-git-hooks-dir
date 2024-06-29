@@ -73,4 +73,5 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3'
-      - run: ruby test/test_set_hooks.rb
+      - run: rake test
+      - run: rake check

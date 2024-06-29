@@ -11,7 +11,7 @@ class TestSetGitHooks < Test::Unit::TestCase
     Dir.chdir @tmp_path
     `git init`
     assert $?.success?
-    ['GITHUB_ACTION', 'CI'].each{|n| ENV.delete n }
+    ['GITHUB_ACTION', 'CI'].each { |n| ENV.delete n }
   end
 
   def teardown
@@ -40,4 +40,3 @@ class TestSetGitHooks < Test::Unit::TestCase
     assert_raise { SetGitHooksDir::setup 'this-directory-does-not-exist' }
   end
 end
-

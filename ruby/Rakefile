@@ -1,0 +1,21 @@
+task :hello do
+  puts 'hello'
+end
+
+task :test do
+  sh 'ruby test/test_set_hooks.rb'
+end
+
+directory '.bundle/deps' do
+  sh 'bundle install'
+end
+
+task :fmt => '.bundle/deps' do
+  # rufo exit with non-zero status when some code needed formatting
+  sh 'bundle exec rufo lib test' rescue nil
+end
+
+task :check => '.bundle/deps' do
+  sh 'bundle exec rufo --check lib test'
+  sh 'ruby -c lib/*.rb test/*.rb'
+end
