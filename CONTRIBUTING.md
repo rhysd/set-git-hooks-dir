@@ -11,6 +11,8 @@ programming languages.
 The [cargo](https://doc.rust-lang.org/cargo/) package manager manages the development.
 
 ```sh
+cd ./rust
+
 # Test
 cargo test
 
@@ -29,6 +31,8 @@ cargo publish
 The [npm](https://www.npmjs.com/) package manager manages the development.
 
 ```sh
+cd ./npm
+
 # Install dependencies
 npm install
 
@@ -87,7 +91,7 @@ flake8 ./set_git_hooks_dir ./test
 black ./set_git_hooks_dir ./test
 ```
 
-The [`publish.bash`](./scripts/publish.bash) script builds the Python package and uploads it to [PyPI](https://pypi.org/).
+The [`publish.bash`](./python/scripts/publish.bash) script builds the Python package and uploads it to [PyPI](https://pypi.org/).
 
 ```sh
 bash ./scripts/publish.bash
@@ -95,6 +99,26 @@ bash ./scripts/publish.bash
 
 **Note:** Only a sdist package should be uploaded. Do not upload wheel package (`.whl`). The wheel package does not
 allow running an arbitrary code on installing the package. We rely on the hook to configure Git hooks.
+
+## [Ruby](./python)
+
+All tasks are managed by `rake` command which is a part of the Ruby standard toolchain.
+
+```sh
+cd ./ruby
+
+# Run tests
+rake test
+
+# Run checks
+rake check
+
+# Run code formtter
+rake fmt
+
+# Release gem. You need to run `gem signin` in advance
+rake release
+```
 
 ## CI
 
@@ -104,6 +128,7 @@ All CI jobs are defined in the [CI workflow](.github/workflows/ci). All the foll
   - Rust
   - Node.js
   - Python
+  - Ruby
 - OS
   - Linux
   - macOS

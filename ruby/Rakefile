@@ -14,3 +14,9 @@ end
 task :check => '.bundle/deps' do
   sh 'bundle exec rufo --check lib test'
 end
+
+task :release do
+  Dir['set_git_hooks_dir-*.gem'].each{|f| File.delete f }
+  sh 'gem build set_git_hooks_dir.gemspec'
+  sh "gem push #{Dir['set_git_hooks_dir-*.gem'][0]}"
+end
