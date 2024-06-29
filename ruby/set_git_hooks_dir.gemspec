@@ -9,5 +9,5 @@ Gem::Specification.new do |s|
   s.homepage = 'https://rubygems.org/gems/set_git_hooks_dir'
   s.license = 'MIT'
   s.required_ruby_version = '>= 2.6'
-  s.require_paths = ["lib"]
+  s.require_paths = ['lib']
 end

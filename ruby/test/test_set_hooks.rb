@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test/unit'
 require 'pathname'
 require 'tmpdir'
@@ -11,7 +13,7 @@ class TestSetGitHooks < Test::Unit::TestCase
     Dir.chdir @tmp_path
     `git init`
     assert $?.success?
-    ['GITHUB_ACTION', 'CI'].each { |n| ENV.delete n }
+    %w[GITHUB_ACTION CI].each { |n| ENV.delete n }
   end
 
   def teardown
@@ -23,20 +25,20 @@ class TestSetGitHooks < Test::Unit::TestCase
     Dir.mkdir(@tmp_path + 'this-is-test')
 
     ENV['GITHUB_ACTION'] = 'true'
-    SetGitHooksDir::setup 'this-is-test'
+    SetGitHooksDir.setup 'this-is-test'
     config = File.read(@tmp_path + '.git/config')
     assert_no_match(/\thooksPath = /, config)
     ENV.delete 'GITHUB_ACTION'
 
-    SetGitHooksDir::setup 'this-is-test'
+    SetGitHooksDir.setup 'this-is-test'
     config = File.read(@tmp_path + '.git/config')
     assert_match(/\thooksPath = /, config)
 
     Dir.mkdir(@tmp_path + '2-this-is-test')
-    SetGitHooksDir::setup '2-this-is-test'
+    SetGitHooksDir.setup '2-this-is-test'
     config = File.read(@tmp_path + '.git/config')
     assert_no_match(/\thooksPath = 2-this-is-test/, config)
 
-    assert_raise { SetGitHooksDir::setup 'this-directory-does-not-exist' }
+    assert_raise { SetGitHooksDir.setup 'this-directory-does-not-exist' }
   end
 end
