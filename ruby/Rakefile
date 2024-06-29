@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 require 'fileutils'
+
+RUFO_TARGETS = %w[lib test plugins.rb Gemfile set_git_hooks_dir.gemspec].freeze
 
 task :test do
   sh 'ruby test/test_set_hooks.rb'
@@ -10,11 +14,11 @@ end
 
 task :fmt => '.bundle/deps' do
   # rufo exit with non-zero status when some code needed formatting
-  sh 'bundle exec rufo lib test' rescue nil
+  sh "bundle exec rufo #{RUFO_TARGETS.join ' '}" rescue nil
 end
 
 task :check => '.bundle/deps' do
-  sh 'bundle exec rufo --check lib test'
+  sh "bundle exec rufo --check #{RUFO_TARGETS.join ' '}"
 end
 
 task :release do

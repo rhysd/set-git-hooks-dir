@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'set_git_hooks_dir'
-  s.version = '0.0.5'
+  s.version = '0.0.6'
   s.summary = 'Deadly simple Git hooks directory setup tool'
   s.description = 'set_git_hooks_dir is a deadly simple gem to configure your Git hooks on package installation'
   s.authors = ['rhysd']
