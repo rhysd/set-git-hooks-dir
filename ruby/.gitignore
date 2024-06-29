@@ -1,3 +1,4 @@
 /set_git_hooks_dir-*.gem
 /Gemfile.lock
 /.bundle/deps
+/.bundle/plugin
