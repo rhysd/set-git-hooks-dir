@@ -39,6 +39,6 @@ class TestSetGitHooks < Test::Unit::TestCase
     config = File.read(@tmp_path + '.git/config')
     assert_no_match(/\thooksPath = 2-this-is-test/, config)
 
-    assert_raise { SetGitHooksDir.setup 'this-directory-does-not-exist' }
+    assert_raise(SetGitHooksDir::GitHooksDirNotFound) { SetGitHooksDir.setup 'this-directory-does-not-exist' }
   end
 end
