@@ -22,7 +22,7 @@ cargo clippy --all
 # Format with rustfmt
 cargo fmt
 
-# Release
+# Release after bumping the version in Cargo.toml
 cargo publish
 ```
 
@@ -48,7 +48,7 @@ npm run lint
 # Format with prettier
 npm run fmt
 
-# Release
+# Release after bumping the version in package.json
 npm publish
 ```
 
@@ -94,6 +94,7 @@ black ./set_git_hooks_dir ./test
 The [`publish.bash`](./python/scripts/publish.bash) script builds the Python package and uploads it to [PyPI](https://pypi.org/).
 
 ```sh
+# Run this script after bumping the version in pyproject.toml
 bash ./scripts/publish.bash
 ```
 
@@ -116,7 +117,7 @@ rake check
 # Run code formtter
 rake fmt
 
-# Release gem. You need to run `gem signin` in advance
+# Release this gem after bumping the version in the set_git_hooks_dir.gemspec file
 rake release
 ```
 
@@ -133,6 +134,23 @@ The implementation level behavior of the package is as follows:
 
 [bundler-plugin]: https://bundler.io/guides/bundler_plugins.html
 [rubygems-plugin]: https://guides.rubygems.org/plugins/
+
+## Package versioning
+
+Versioning of all packages in this project conforms [Semantic versioning 2.0.0][semver].
+
+In addition,
+
+- The major version and minor version must be synchronized among all packages.
+- The patch version can differ among the packages. For example, when some fix is added to pip package, we bump the patch
+  version of the pip package and publish the new version. Other packages' patch versions are not bumped.
+
+This means that when new compatible or breaking change is added, all the packages should implement the same feature. The
+major or minor version of all the packages must be bumped and the new packages must be published simultaneously.
+
+This is important to provide the same functionalities in a language-agnostic manner.
+
+[semver]: https://semver.org/
 
 ## CI
 

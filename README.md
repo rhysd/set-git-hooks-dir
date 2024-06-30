@@ -23,12 +23,12 @@ So why don't you run this simple command directly in your terminal? That's becau
 This tool offers the way to automatically setup the Git hooks while preparing for the development in your repository.
 And it does nothing else. Note that this automatic setup is skipped when it is run on CI.
 
-This tool now supports the following language/tool, and maybe more languages/tools are supported in the future.
+This tool now supports the following language/tool. More languages/tools may be supported in the future.
 
-- [Rust](./rust) ([cargo][])
-- [Node.js](./npm) ([npmjs][])
-- [Python](./python) ([pip][])
-- [Ruby](./ruby) ([rubygems][])
+- [Rust (crate)](./rust)
+- [Node.js (npm package)](./npm)
+- [Python (pip package)](./python)
+- [Ruby (gem)](./ruby)
 - ...more?
 
 ## Usage
@@ -132,6 +132,17 @@ The gem is also a plugin of rubygems package manager. It is available when you i
 To know why this package needs to be a bundler plugin, see the 'Details' section in the
 [package README file](./ruby/README.md).
 
+## CI detection
+
+This tool skips configuring Git hooks on CI looking at the following environment variables. When one of them exists,
+this tool does nothing.
+
+- `CI`
+- `GITHUB_ACTION`
+- `JENKINS_URL`
+
+In addition, it also looks at `SET_GIT_HOOKS_DIR_SKIP`. Please see the 'Customization' section for more details.
+
 ## Customization
 
 Some environment variables can customize the behavior of this tool.
@@ -154,6 +165,10 @@ prevent the configuration temporarily (e.g. self-hosted CI system).
 export SET_GIT_HOOKS_DIR_SKIP=true
 ```
 
+## Versioning
+
+All packages in this project conform [Semantic versioning 2.0.0][semver].
+
 ## License
 
 This repository is distributed under [the MIT license](LICENSE).
@@ -171,10 +186,7 @@ This repository is distributed under [the MIT license](LICENSE).
 [gem]: https://rubygems.org/gems/set_git_hooks_dir
 [repo]: https://github.com/rhysd/set-git-hooks-dir
 [hooks]: https://git-scm.com/docs/githooks
-[cargo]: https://doc.rust-lang.org/cargo/
-[npmjs]: https://www.npmjs.com/
-[pip]: https://pip.pypa.io/en/stable/
-[rubygems]: https://rubygems.org/
 [husky]: https://typicode.github.io/husky/
 [pre-commit]: https://pre-commit.com/
 [bundler]: https://bundler.io/
+[semver]: https://semver.org/

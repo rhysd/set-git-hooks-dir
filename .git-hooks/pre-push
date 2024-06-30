@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e -o pipefail
-set +x
 
 if [ -d rust/target ]; then
     echo 'Running tests for Rust'
