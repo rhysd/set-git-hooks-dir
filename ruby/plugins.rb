@@ -12,4 +12,8 @@ require 'set_git_hooks_dir'
 # To enable automatic hooks configuration via `bundle install`, this package needs to be installed as a bundler plugin.
 # For the case of `gem install`, `lib/rubygems_plugin.rb` remains (though I don't know the use case).
 
-SetGitHooksDir.setup '.git-hooks'
+begin
+  SetGitHooksDir.setup '.git-hooks'
+rescue StandardError => exc
+  raise Bundler::BundlerError.new exc.message
+end
