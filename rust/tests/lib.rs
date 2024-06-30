@@ -17,11 +17,6 @@ impl Default for Fixture {
         let cwd = env::current_dir().unwrap();
         let tmp = tempdir().unwrap();
         env::set_current_dir(tmp.path()).unwrap();
-        let out = Command::new("git").arg("init").output().unwrap();
-        if !out.status.success() {
-            let stderr = String::from_utf8_lossy(&out.stderr);
-            panic!("`git init` failed: {stderr}");
-        }
         for name in ["GITHUB_ACTION", "CI"] {
             env::remove_var(name);
         }
@@ -36,28 +31,67 @@ impl Drop for Fixture {
 }
 
 #[test]
-fn test_setup_git_config() {
+fn test_setup_hooks_in_git_config() {
     let _fixture = Fixture::default();
 
-    set_git_hooks_dir::setup("this-directory-does-not-exist").unwrap_err();
+    // Create a hooks directory
+    fs::create_dir("test-hooks-dir").unwrap();
 
-    fs::create_dir("this-is-test").unwrap();
+    // The hooks directory exists but a Git repository has not been created yet
+    let err = set_git_hooks_dir::setup("test-hooks-dir").unwrap_err();
+    let msg = format!("{err}");
+    assert!(
+        msg.contains(r#"Directory "test-hooks-dir" is not found at any root of Git repository"#),
+        "message={msg:?}",
+    );
+
+    // Create Git repository
+    let out = Command::new("git").arg("init").output().unwrap();
+    assert!(
+        out.status.success(),
+        "stderr={:?}",
+        String::from_utf8_lossy(&out.stderr),
+    );
+
+    // Git repository exists but the hooks directory does not exist
+    let err = set_git_hooks_dir::setup("this-directory-does-not-exist").unwrap_err();
+    let msg = format!("{err}");
+    assert!(
+        msg.contains(r#"Directory "this-directory-does-not-exist" is not found"#),
+        "message={msg:?}",
+    );
 
     // Hooks are not set on CI
-    env::set_var("GITHUB_ACTION", "true");
-    set_git_hooks_dir::setup("this-is-test").unwrap();
-    let content = fs::read_to_string(".git/config").unwrap();
-    assert!(!content.contains("hooksPath = this-is-test"), "{content:?}");
-    env::remove_var("GITHUB_ACTION");
+    for name in [
+        "GITHUB_ACTION",
+        "CI",
+        "SET_GIT_HOOKS_DIR_SKIP",
+        "JENKINS_URL",
+    ] {
+        env::set_var(name, "true");
+        set_git_hooks_dir::setup("test-hooks-dir").unwrap();
+        let content = fs::read_to_string(".git/config").unwrap();
+        assert!(
+            !content.contains("\n\thooksPath = test-hooks-dir"),
+            "env={name}, .git/config={content:?}",
+        );
+        env::remove_var(name);
+    }
 
     // Normal case
-    set_git_hooks_dir::setup("this-is-test").unwrap();
+    set_git_hooks_dir::setup("test-hooks-dir").unwrap();
     let content = fs::read_to_string(".git/config").unwrap();
-    assert!(content.contains("hooksPath = this-is-test"), "{content:?}");
+    assert!(
+        content.contains("\n\thooksPath = test-hooks-dir"),
+        ".git/config={content:?}",
+    );
 
     // Do not override existing configuration
-    fs::create_dir("second-this-is-test").unwrap();
-    set_git_hooks_dir::setup("second-this-is-test").unwrap();
+    fs::create_dir("second-test-hooks-dir").unwrap();
+    set_git_hooks_dir::setup("second-test-hooks-dir").unwrap();
     let content = fs::read_to_string(".git/config").unwrap();
-    assert!(content.contains("hooksPath = this-is-test"), "{content:?}");
+    assert!(
+        content.contains("\n\thooksPath = test-hooks-dir"),
+        ".git/config={content:?}",
+    );
 }
