@@ -4,10 +4,11 @@ Set Git hooks directory
 [![crate][crate-badge]][crate]
 [![npm][npm-badge]][npm]
 [![pypi][pypi-badge]][pypi]
+[![gem][gem-badge]][gem]
 
 [set-git-hooks-dir][repo] is a deadly simple tool to manage your [Git hooks][hooks] in your repository and automate the
-setup for Rust, Node.js, and Python projects. This tool essentially runs the following command in your repository. This
-is the same motivation as [husky][] or [pre-commit][] but set-git-hooks-dir is much simpler than them.
+setup for Rust, Node.js, Python, and Ruby projects. This tool essentially runs the following command in your repository.
+This is the same motivation as [husky][] or [pre-commit][] but set-git-hooks-dir is much simpler than them.
 
 ```sh
 git config core.hooksPath .git-hooks
@@ -27,6 +28,7 @@ This tool now supports the following language/tool, and maybe more languages/too
 - [Rust](./rust) ([cargo][])
 - [Node.js](./npm) ([npmjs][])
 - [Python](./python) ([pip][])
+- [Ruby](./ruby) ([rubygems][])
 - ...more?
 
 ## Usage
@@ -103,8 +105,32 @@ automatic configuration won't work due to limitation of the Python package manag
 python -m pip install set-git-hooks-dir
 ```
 
-This command downloads a source package (sdist) and builds it in your local. `git-hooks` directory is configured in
+This command downloads a source package (sdist) and builds it in your local. The `.git-hooks` directory is configured in
 `.git/config` while building the package.
+
+#### Ruby
+
+Add [set_git_hooks_dir][gem] gem to your `Gemfile` file as a [bundler][] plugin:
+
+```ruby
+source 'https://rubygems.org'
+
+# ...
+
+plugin 'set_git_hooks_dir'
+```
+
+When you install dependencies, bundler installs the plugin.
+
+```sh
+bundle install
+```
+
+The plugin automatically configures the `.git-hooks` directory in `.git/config`.
+
+The gem is also a plugin of rubygems package manager. It is available when you install this package via `gem install`.
+To know why this package needs to be a bundler plugin, see the 'Details' section in the
+[package README file](./ruby/README.md).
 
 ## Customization
 
@@ -141,10 +167,14 @@ This repository is distributed under [the MIT license](LICENSE).
 [npm]: https://www.npmjs.com/package/set-git-hooks-dir
 [pypi-badge]: https://img.shields.io/pypi/v/set-git-hooks-dir
 [pypi]: https://pypi.org/project/set-git-hooks-dir/
+[gem-badge]: https://img.shields.io/gem/v/set_git_hooks_dir
+[gem]: https://rubygems.org/gems/set_git_hooks_dir
 [repo]: https://github.com/rhysd/set-git-hooks-dir
 [hooks]: https://git-scm.com/docs/githooks
 [cargo]: https://doc.rust-lang.org/cargo/
 [npmjs]: https://www.npmjs.com/
 [pip]: https://pip.pypa.io/en/stable/
+[rubygems]: https://rubygems.org/
 [husky]: https://typicode.github.io/husky/
 [pre-commit]: https://pre-commit.com/
+[bundler]: https://bundler.io/
