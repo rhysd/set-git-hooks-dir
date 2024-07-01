@@ -121,8 +121,9 @@ rake fmt
 rake release
 ```
 
-This gem works as both bundler and rubygems plugins. As the ['Details' section](./ruby/README.md) says, this is because
-bundler does not run rubygems plugin's install hooks on `bundle install`. Please read the section for the details.
+This gem works as both bundler plugin and rubygems plugin. As the ['Details' section](./ruby/README.md) says, this is
+because bundler does not run rubygems plugin's install hooks on `bundle install`. Please read the section for the
+details.
 
 The implementation level behavior of the package is as follows:
 
@@ -130,7 +131,7 @@ The implementation level behavior of the package is as follows:
   on the installation and the script runs `git config` while the plugin setup.
 - `gem install` : This gem works as a [rubygems plugin][rubygems-plugin]. rubygems runs `Gem.post_install` hook in
   [`rubygems_plugin.rb`](./ruby/lib/rubygems_plugin.rb). The hook runs `git config`. Note that the hooks is called on
-  each package installation. So the hook only runs the command only when `set_git_hooks_dir` pacakge is installed.
+  each package installation. So the hook only runs the command only when `set_git_hooks_dir` package is installed.
 
 [bundler-plugin]: https://bundler.io/guides/bundler_plugins.html
 [rubygems-plugin]: https://guides.rubygems.org/plugins/

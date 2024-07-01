@@ -20,13 +20,13 @@ So why don't you run this simple command directly in your terminal? That's becau
 - set-git-hooks-dir configures hooks wisely. It configures Git hooks only once to avoid running `git` process on each
   build. And it skips the configuration on CI.
 
-This tool offers the way to automatically setup the Git hooks while preparing for the development in your repository.
-And it does nothing else. Note that this automatic setup is skipped when it is run on CI.
+This tool offers the way to automatically configure the Git hooks while preparing for the development in your
+repository. And it does nothing else. Note that this automatic setup is skipped when it is run on CI.
 
-This tool now supports the following language/tool. More languages/tools may be supported in the future.
+This tool now supports the following languages. More languages may be supported in the future.
 
 - [Rust (crate)](./rust)
-- [Node.js (npm package)](./npm)
+- [JavaScript (npm package)](./npm)
 - [Python (pip package)](./python)
 - [Ruby (gem)](./ruby)
 - ...more?
@@ -101,12 +101,30 @@ And everything you need to do has been done. The `postinstall` hook of the packa
 Ensure that you have created and activated your Python virtual environment within your repository. Otherwise the
 automatic configuration won't work due to limitation of the Python package manager.
 
+If you use [pyproject.toml][] for your Python project, add [set-git-hooks-dir pip package][pypi] as an optional
+dependency.
+
+```toml
+[project.optional-dependencies]
+dev = [
+    "set-git-hooks-dir",
+]
+```
+
+And install the dependency.
+
+```sh
+python -m pip install -e '.[dev]'
+```
+
+Or you can directly install the package.
+
 ```sh
 python -m pip install set-git-hooks-dir
 ```
 
-This command downloads a source package (sdist) and builds it in your local. The `.git-hooks` directory is configured in
-`.git/config` while building the package.
+`pip install` downloads a source package (sdist) and builds it in your local. The `.git-hooks` directory is configured
+in `.git/config` while building the package.
 
 #### Ruby
 
@@ -131,6 +149,38 @@ The plugin automatically configures the `.git-hooks` directory in `.git/config`.
 The gem is also a plugin of rubygems package manager. It is available when you install this package via `gem install`.
 To know why this package needs to be a bundler plugin, see the 'Details' section in the
 [package README file](./ruby/README.md).
+
+#### Other languages
+
+For other languages, you need to run `git config` by yourself. If your project has some build script, it would be a
+good place to run the command.
+
+Here is an example of `Makefile` in Go project.
+
+```make
+somecommand: $(wildcard *.go) .git-hooks-done
+	go build
+
+.git-hooks-done:
+	git config core.hooksPath .git-hooks
+	touch .git-hooks-done
+```
+
+Then building your project automatically sets Git hooks once:
+
+```sh
+make
+```
+
+### How to uninstall
+
+1. Remove the package from dependencies of your project.
+   - **Rust**: `cargo remove --dev set-git-hooks-dir`
+   - **Node.js**: `npm uninstall --save-dev set-git-hooks-dir`
+   - **Python**: Remove the dependency from your `pyproject.toml` and `python -m pip uninstall set-git-hooks-dir`
+   - **Ruby**: Remove `plugin 'set_git_hooks_dir'` line from `Gemfile` and `bundle plugin uninstall set_git_hooks_dir`
+2. Run `git config --unset core.hooksPath`.
+3. Remove the `.git-hooks` directory.
 
 ## CI detection
 
@@ -169,6 +219,12 @@ export SET_GIT_HOOKS_DIR_SKIP=true
 
 All packages in this project conform [Semantic versioning 2.0.0][semver].
 
+## Bug reporting or feature request
+
+Please create a new issue on GitHub:
+
+https://github.com/rhysd/set-git-hooks-dir/issues/new
+
 ## License
 
 This repository is distributed under [the MIT license](LICENSE).
@@ -188,5 +244,6 @@ This repository is distributed under [the MIT license](LICENSE).
 [hooks]: https://git-scm.com/docs/githooks
 [husky]: https://typicode.github.io/husky/
 [pre-commit]: https://pre-commit.com/
+[pyproject.toml]: https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
 [bundler]: https://bundler.io/
 [semver]: https://semver.org/
