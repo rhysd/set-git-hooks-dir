@@ -14,6 +14,6 @@ require 'set_git_hooks_dir'
 
 begin
   SetGitHooksDir.setup '.git-hooks'
-rescue StandardError => exc
-  raise Bundler::BundlerError.new exc.message
+rescue StandardError => err
+  STDERR.puts "set_git_hooks_dir: #{err}"
 end
