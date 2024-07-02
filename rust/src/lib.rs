@@ -3,6 +3,8 @@
 //!
 //! https://github.com/rhysd/set-git-hooks-dir
 
+#![forbid(unsafe_code)]
+
 mod installer;
 
 pub use installer::setup;

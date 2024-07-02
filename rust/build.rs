@@ -1,5 +1,6 @@
 #[cfg(feature = "setup-on-build")]
 #[path = "src/installer.rs"]
+#[allow(dead_code)]
 mod installer;
 
 fn main() {

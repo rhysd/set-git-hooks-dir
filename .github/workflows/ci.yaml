@@ -21,6 +21,9 @@ jobs:
         with:
           components: clippy,rustfmt
       - run: cargo clippy --tests -- -D warnings
+      - run: cargo check --no-default-features
+      - run: cargo check --release
+      - run: cargo check --release --no-default-features
       - run: cargo test
       - run: cargo fmt --all --check
   npm:
