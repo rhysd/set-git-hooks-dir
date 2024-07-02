@@ -172,6 +172,15 @@ Then building your project automatically sets Git hooks once:
 make
 ```
 
+### Confirm the hooks setup
+
+You can confirm that Git hooks configuration was done correctly by running the following command.
+
+```console
+$ config --get core.hooksPath
+.git-hooks
+```
+
 ### How to uninstall
 
 1. Remove the package from dependencies of your project.
