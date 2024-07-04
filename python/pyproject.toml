@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "set-git-hooks-dir"
-version = "0.0.5"
+version = "1.0.0"
 description = "Deadly simple Git hooks directory setup tool"
 authors = [
   { name="rhysd", email="lin90162@yahoo.co.jp" },

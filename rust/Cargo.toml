@@ -1,6 +1,6 @@
 [package]
 name = "set-git-hooks-dir"
-version = "0.0.0"
+version = "1.0.0"
 edition = "2021"
 description = "Deadly simple Git hooks directory setup tool"
 license = "MIT"
