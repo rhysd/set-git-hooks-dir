@@ -5,7 +5,7 @@ mod installer;
 
 fn main() {
     #[cfg(all(feature = "setup-on-build", debug_assertions))]
-    if let Err(err) = installer::setup(".git-hooks") {
+    if let Err(err) = installer::setup(".git-hooks", std::env::var_os("OUT_DIR").unwrap()) {
         println!("cargo::warning=Git hooks directory was not set: {}", err);
     }
 }
