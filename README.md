@@ -72,15 +72,15 @@ ls .git/hooks/
 
 #### Rust
 
-Add [set-git-hooks-dir crate][crate] to your dev dependencies and run `cargo check` to do the initial setup.
+Add [set-git-hooks-dir crate][crate] to your dev dependencies and run `cargo test` to do the initial setup.
 
 ```sh
 cargo add set-git-hooks-dir --dev
-cargo check
+cargo test
 ```
 
-And everything you need to do has been done. When your project's dev-dependencies are built (e.g. `cargo test`,
-`cargo check`, `cargo clippy`) for the first time, `core.hooksPath` is automatically configured.
+And everything you need to do has been done. When your project's dev-dependencies are built (e.g. `cargo test`) for
+the first time, `core.hooksPath` is automatically configured.
 
 #### Node.js
 
@@ -177,7 +177,7 @@ make
 You can confirm that Git hooks configuration was done correctly by running the following command.
 
 ```console
-$ config --get core.hooksPath
+$ git config --get core.hooksPath
 .git-hooks
 ```
 
