@@ -1,11 +1,13 @@
 [package]
 name = "set-git-hooks-dir"
-version = "1.0.0"
+version = "1.0.2"
 edition = "2021"
 description = "Deadly simple Git hooks directory setup tool"
 license = "MIT"
-include = ["src", "LICENSE"]
+include = ["src", "LICENSE", "build.rs"]
 keywords = ["git", "hooks", "pre-commit", "pre-push", "husky"]
+homepage = "https://github.com/rhysd/set-git-hooks-dir#readme"
+repository = "https://github.com/rhysd/set-git-hooks-dir"
 
 [features]
 default = ["setup-on-build"]
