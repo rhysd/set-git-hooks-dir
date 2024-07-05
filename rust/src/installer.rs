@@ -31,7 +31,9 @@ fn find_dot_git(hooks_dir: &Path, base_dir: &Path) -> io::Result<PathBuf> {
     }
 }
 
-/// Setup the Git hooks directory path specified by `dir` argument.
+/// Setup the Git hooks directory path specified by `hooks_dir` argument. `base_dir` is a path under your repository.
+/// Usually it is the value of `OUT_DIR` environment variable in a build script since `target` directory is placed in
+/// the repository.
 pub fn setup(hooks_dir: impl AsRef<Path>, base_dir: impl AsRef<Path>) -> io::Result<()> {
     for var in CI_ENV_VARS {
         if matches!(env::var(var), Ok(v) if !v.is_empty()) {
