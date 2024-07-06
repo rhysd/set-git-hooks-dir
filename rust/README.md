@@ -27,6 +27,20 @@ fn main() {
 }
 ```
 
+## Use as a aommand line tool
+
+By installing this tool with `cargo install`, `set-git-hooks-dir` command is available.
+
+```sh
+cargo install set-git-hooks-dir
+```
+
+This command configures `.git-hooks` as a Git hooks directory.
+
+```sh
+set-git-hooks-dir
+```
+
 ## License
 
 This crate is distributed under [the MIT license](LICENSE).

@@ -79,8 +79,8 @@ cargo add set-git-hooks-dir --dev
 cargo test
 ```
 
-And everything you need to do has been done. When your project's dev-dependencies are built (e.g. `cargo test`) for
-the first time, `core.hooksPath` is automatically configured.
+And everything you need to do has been done. When your project's dev-dependencies are built (e.g. `cargo test`,
+`cargo check --tests`) for the first time, `core.hooksPath` is automatically configured.
 
 #### Node.js
 

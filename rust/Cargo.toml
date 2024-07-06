@@ -9,6 +9,10 @@ keywords = ["git", "hooks", "pre-commit", "pre-push", "husky"]
 homepage = "https://github.com/rhysd/set-git-hooks-dir#readme"
 repository = "https://github.com/rhysd/set-git-hooks-dir"
 
+[[bin]]
+name = "set-git-hooks-dir"
+path = "src/main.rs"
+
 [features]
 default = ["setup-on-build"]
 setup-on-build = []
